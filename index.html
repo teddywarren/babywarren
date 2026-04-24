@@ -575,10 +575,7 @@
     <button class="nav-btn active" id="nav-home" onclick="goTo('home')">Home</button>
     <button class="nav-btn" id="nav-registry" onclick="goTo('registry')">Registry</button>
     <button class="nav-btn" id="nav-photos" onclick="tryPrivate('photos')">
-      <span class="nav-lock">Photos <span class="nav-lock-dot"></span></span>
-    </button>
-    <button class="nav-btn" id="nav-updates" onclick="tryPrivate('updates')">
-      <span class="nav-lock">Updates <span class="nav-lock-dot"></span></span>
+      <span class="nav-lock">Updates &amp; Photos <span class="nav-lock-dot"></span></span>
     </button>
   </div>
 </nav>
@@ -601,7 +598,7 @@
 
     <div class="btn-row">
       <button class="btn btn-dark" onclick="goTo('registry')">View Registry</button>
-      <button class="btn btn-ghost" onclick="tryPrivate('updates')">Family Updates</button>
+      <button class="btn btn-ghost" onclick="tryPrivate('photos')">Updates &amp; Photos</button>
     </div>
   </div>
 
@@ -890,8 +887,8 @@
   <div class="lock-screen">
     <div class="lock-card">
       <div class="lock-ornament">◯</div>
-      <h2 class="lock-title">Family <em>Photos</em></h2>
-      <p class="lock-sub">This gallery is private, shared with family and close friends. Enter the password we sent you to view.</p>
+      <h2 class="lock-title">Family <em>Updates</em></h2>
+      <p class="lock-sub">This section is private, shared with family and close friends. Enter the password we sent you to view.</p>
       <input type="password" class="pw-field" id="pw-photos" placeholder="Enter password" onkeyup="if(event.key==='Enter') checkPw('photos')">
       <div class="pw-error" id="pw-photos-err"></div>
       <button class="btn btn-dark" style="width:100%" onclick="checkPw('photos')">Enter</button>
@@ -900,55 +897,13 @@
   </div>
 </div>
 
-<!-- ════════════ PHOTOS (unlocked) ════════════ -->
+<!-- ════════════ PHOTOS + UPDATES (unlocked) ════════════ -->
 <div id="page-photos" class="page">
-  <div class="photos-wrap">
-    <div class="page-header">
-      <div class="page-kicker">Baby Warren · Private</div>
-      <h2 class="page-title">Our <em>Gallery</em></h2>
-      <p class="page-sub">Bump updates, appointments, and moments we're keeping close. Shared with the people we love.</p>
-    </div>
-
-    <div class="photo-grid">
-      <div class="photo-tile">
-        <img src="ultrasound-feb.jpg" alt="Ultrasound February 19, 2026">
-        <div class="photo-tile-label">February 19, 2026</div>
-      </div>
-      <div class="photo-tile">
-        <img src="ultrasound-apr.jpg" alt="Ultrasound April 8, 2026">
-        <div class="photo-tile-label">April 8, 2026</div>
-      </div>
-    </div>
-
-    <div class="photo-upload-note">
-      To add more photos: upload your image files to GitHub alongside index.html, then add them here as<br>
-      <code>&lt;div class="photo-tile"&gt;&lt;img src="your-photo.jpg" alt="..."&gt;&lt;/div&gt;</code>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════ UPDATES LOCK ════════════ -->
-<div id="page-updates-lock" class="page">
-  <div class="lock-screen">
-    <div class="lock-card">
-      <div class="lock-ornament">◯</div>
-      <h2 class="lock-title">Family <em>Updates</em></h2>
-      <p class="lock-sub">Our journal for family and close friends. Enter the password we sent you to follow along.</p>
-      <input type="password" class="pw-field" id="pw-updates" placeholder="Enter password" onkeyup="if(event.key==='Enter') checkPw('updates')">
-      <div class="pw-error" id="pw-updates-err"></div>
-      <button class="btn btn-dark" style="width:100%" onclick="checkPw('updates')">Enter</button>
-      <p class="lock-hint">Shared by email or private message</p>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════ UPDATES (unlocked) ════════════ -->
-<div id="page-updates" class="page">
   <div class="updates-wrap">
     <div class="page-header">
       <div class="page-kicker">Baby Warren · Private</div>
       <h2 class="page-title">Our <em>Journal</em></h2>
-      <p class="page-sub">Notes and updates from our journey — written for the people who matter most to us.</p>
+      <p class="page-sub">Updates and photos from our journey — shared with the people we love.</p>
     </div>
 
     <div class="update-post">
@@ -957,6 +912,9 @@
         <div class="update-meta-line"></div>
       </div>
       <h3 class="update-title">She's healthy and growing well</h3>
+      <div class="update-photo-wrap">
+        <img src="ultrasound-apr.jpg" alt="Ultrasound April 8, 2026" style="width:100%;display:block;margin:1.25rem 0;">
+      </div>
       <p class="update-body">Our April ultrasound brought more good news — she is healthy and growing beautifully. We are so grateful for every one of these appointments and for the little glimpses of her we get to see. More updates to come as we get closer to August.</p>
     </div>
 
@@ -966,6 +924,9 @@
         <div class="update-meta-line"></div>
       </div>
       <h3 class="update-title">She's growing well</h3>
+      <div class="update-photo-wrap">
+        <img src="ultrasound-feb.jpg" alt="Ultrasound February 19, 2026" style="width:100%;display:block;margin:1.25rem 0;">
+      </div>
       <p class="update-body">Our February ultrasound went wonderfully. She is growing right on track and everything looked exactly as it should. We left feeling grateful and a little more in love than we already were.</p>
     </div>
 
