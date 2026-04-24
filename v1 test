@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Warren</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #f7f4ef;
+    --ivory-dark: #ede9e0;
+    --ivory-deep: #ddd8cc;
+    --ink: #2a2620;
+    --ink-light: #6b6458;
+    --ink-lighter: #a09890;
+    --oak: #8b7355;
+    --oak-light: #c4ad8f;
+    --white: #fdfcfa;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Jost', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--ivory);
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; animation: reveal .5s ease both; }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--ivory);
+    border-bottom: 1px solid var(--ivory-deep);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+  }
+  .nav-wordmark {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: .08em;
+    color: var(--ink);
+    cursor: pointer;
+    user-select: none;
+  }
+  .nav-wordmark span { font-style: normal; color: var(--ink); }
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-btn {
+    font-family: var(--sans);
+    font-size: .65rem;
+    font-weight: 400;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-lighter);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color .25s;
+    position: relative;
+  }
+  .nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0; right: 0;
+    height: 1px;
+    background: var(--oak);
+    transform: scaleX(0);
+    transition: transform .25s;
+  }
+  .nav-btn:hover { color: var(--ink); }
+  .nav-btn:hover::after, .nav-btn.active::after { transform: scaleX(1); }
+  .nav-btn.active { color: var(--ink); }
+  .nav-lock {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+  }
+  .nav-lock-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--ivory-deep);
+    display: inline-block;
+  }
+
+  /* ── HOME ── */
+  .home-hero {
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem;
+    position: relative;
+  }
+  .home-hero::before {
+    display: none;
+  }
+  .hero-kicker {
+    font-size: .65rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--oak);
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+  .hero-headline {
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+  .hero-headline em {
+    font-style: normal;
+    color: var(--ink);
+  }
+  .hero-rule {
+    width: 60px; height: 1px;
+    background: var(--oak-light);
+    margin: 0 auto 1.75rem;
+  }
+  .hero-sub {
+    font-size: .95rem;
+    color: var(--ink);
+    max-width: 380px;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 3.5rem;
+  }
+
+  /* Countdown */
+  .countdown {
+    display: flex;
+    gap: 4rem;
+    margin-bottom: .75rem;
+  }
+  .cd-unit { text-align: center; }
+  .cd-num {
+    font-family: var(--serif);
+    font-size: 3.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+    display: block;
+  }
+  .cd-label {
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ink-lighter);
+    margin-top: .35rem;
+    display: block;
+  }
+  .cd-note {
+    font-size: .72rem;
+    letter-spacing: .1em;
+    color: var(--ink-lighter);
+    margin-bottom: 3rem;
+  }
+
+  /* CTAs */
+  .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--sans);
+    font-size: .65rem;
+    font-weight: 400;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: .85rem 2.2rem;
+    cursor: pointer;
+    transition: all .25s;
+    border: 1px solid;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-dark {
+    background: var(--ink);
+    color: var(--ivory);
+    border-color: var(--ink);
+  }
+  .btn-dark:hover { background: #3d372f; border-color: #3d372f; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ivory-deep);
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  /* About strip */
+  .about-strip {
+    background: var(--white);
+    border-top: 1px solid var(--ivory-deep);
+    border-bottom: 1px solid var(--ivory-deep);
+    padding: 4rem 3rem;
+  }
+  .about-inner { max-width: 900px; margin: 0 auto; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    gap: 0;
+    margin-bottom: 3.5rem;
+  }
+  .about-divider {
+    background: var(--ivory-deep);
+    margin: 0 2.5rem;
+  }
+  .about-item { text-align: center; padding: 1.5rem 1rem; }
+  .about-item-label {
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--oak);
+    margin-bottom: .6rem;
+  }
+  .about-item-value {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .about-note {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto;
+    font-size: .88rem;
+    color: var(--ink-light);
+    line-height: 1.9;
+  }
+  .about-note-head {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin-bottom: .75rem;
+    display: block;
+  }
+
+  /* ── REGISTRY ── */
+  .reg-wrap { max-width: 780px; margin: 0 auto; padding: 5rem 2rem; }
+  .page-header { text-align: center; margin-bottom: 4rem; }
+  .page-kicker {
+    font-size: .62rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--oak);
+    margin-bottom: 1rem;
+  }
+  .page-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .page-title em { font-style: italic; color: var(--oak); }
+  .page-sub {
+    font-size: .85rem;
+    color: var(--ink-light);
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  .reg-affiliate-note {
+    background: var(--white);
+    border: 1px solid var(--ivory-deep);
+    padding: 1.25rem 1.75rem;
+    margin-bottom: 3.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .reg-affiliate-bar {
+    width: 2px;
+    flex-shrink: 0;
+    background: var(--oak-light);
+    align-self: stretch;
+  }
+  .reg-affiliate-text { font-size: .8rem; color: var(--ink-light); line-height: 1.7; }
+  .reg-affiliate-text strong { color: var(--ink); font-weight: 400; }
+
+  .reg-category { margin-bottom: 3.5rem; }
+  .reg-cat-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .reg-cat-label {
+    font-size: .62rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ink-lighter);
+    white-space: nowrap;
+  }
+  .reg-cat-line { flex: 1; height: 1px; background: var(--ivory-deep); }
+
+  .reg-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--ivory-dark);
+    transition: background .2s;
+  }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-item-info { flex: 1; }
+  .reg-item-name {
+    font-size: .92rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: .2rem;
+    letter-spacing: .01em;
+  }
+  .reg-item-detail { font-size: .78rem; color: var(--ink-lighter); }
+  .reg-priority {
+    font-size: .58rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: .25rem .7rem;
+    border: 1px solid;
+    flex-shrink: 0;
+  }
+  .priority-essential {
+    color: var(--oak);
+    border-color: var(--oak-light);
+    background: #f9f4ec;
+  }
+  .priority-nice {
+    color: var(--ink-lighter);
+    border-color: var(--ivory-deep);
+  }
+  .reg-link {
+    font-size: .62rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border: 1px solid var(--ivory-deep);
+    padding: .55rem 1.1rem;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .reg-link:hover { border-color: var(--ink); background: var(--ink); color: var(--ivory); }
+
+  .reg-footer {
+    text-align: center;
+    padding-top: 3rem;
+    border-top: 1px solid var(--ivory-deep);
+    margin-top: 2rem;
+  }
+  .reg-footer p { font-size: .78rem; color: var(--ink-lighter); margin-bottom: 1.25rem; }
+
+  /* ── LOCK SCREEN ── */
+  .lock-screen {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+  }
+  .lock-card {
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  .lock-ornament {
+    width: 32px; height: 32px;
+    border: 1px solid var(--ivory-deep);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    color: var(--ink-lighter);
+    font-size: .85rem;
+  }
+  .lock-title {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+  }
+  .lock-title em { font-style: italic; color: var(--oak); }
+  .lock-sub {
+    font-size: .82rem;
+    color: var(--ink-light);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .pw-field {
+    width: 100%;
+    padding: .85rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--ivory-deep);
+    font-family: var(--sans);
+    font-size: .85rem;
+    font-weight: 300;
+    letter-spacing: .12em;
+    text-align: center;
+    color: var(--ink);
+    outline: none;
+    margin-bottom: .75rem;
+    transition: border-color .2s;
+  }
+  .pw-field:focus { border-color: var(--oak-light); }
+  .pw-error {
+    font-size: .72rem;
+    color: #a0522d;
+    letter-spacing: .04em;
+    min-height: 1.1rem;
+    margin-bottom: .5rem;
+  }
+  .lock-hint {
+    font-size: .68rem;
+    color: var(--ink-lighter);
+    letter-spacing: .08em;
+    margin-top: 1.25rem;
+  }
+
+  /* ── PHOTOS ── */
+  .photos-wrap { max-width: 900px; margin: 0 auto; padding: 5rem 2rem; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 3rem;
+  }
+  .photo-tile {
+    aspect-ratio: 1;
+    background: var(--ivory-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-tile:hover { opacity: .85; }
+  .photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-tile-placeholder {
+    text-align: center;
+    color: var(--ivory-deep);
+  }
+  .photo-tile-placeholder svg { display: block; margin: 0 auto .5rem; }
+  .photo-tile-placeholder span {
+    font-size: .6rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-lighter);
+  }
+  .photo-tile-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(42,38,32,.5));
+    padding: 1.5rem .75rem .6rem;
+    font-size: .6rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.8);
+  }
+  .photo-upload-note {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: .75rem;
+    color: var(--ink-lighter);
+    line-height: 1.7;
+  }
+
+  /* ── UPDATES ── */
+  .updates-wrap { max-width: 640px; margin: 0 auto; padding: 5rem 2rem; }
+  .update-post { margin-bottom: 4.5rem; }
+  .update-post:last-child { margin-bottom: 0; }
+  .update-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .update-date {
+    font-size: .62rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--oak);
+  }
+  .update-meta-line { flex: 1; height: 1px; background: var(--ivory-deep); }
+  .update-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+  .update-title em { font-style: italic; color: var(--oak); }
+  .update-body {
+    font-size: .88rem;
+    color: var(--ink-light);
+    line-height: 2;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  .update-img {
+    width: 100%;
+    background: var(--ivory-dark);
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.25rem 0;
+    font-size: .65rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-lighter);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--ivory-deep);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-wordmark {
+    font-family: var(--serif);
+    font-size: .85rem;
+    font-style: italic;
+    color: var(--ink-lighter);
+  }
+  .footer-note { font-size: .65rem; letter-spacing: .1em; color: var(--ink-lighter); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 1.1rem 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .countdown { gap: 2rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-divider { display: none; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { flex-direction: column; gap: .75rem; text-align: center; }
+    .reg-wrap, .photos-wrap, .updates-wrap { padding: 3rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wordmark" onclick="goTo('home')">Baby <span>Warren</span></div>
+  <div class="nav-links">
+    <button class="nav-btn active" id="nav-home" onclick="goTo('home')">Home</button>
+    <button class="nav-btn" id="nav-registry" onclick="goTo('registry')">Registry</button>
+    <button class="nav-btn" id="nav-photos" onclick="tryPrivate('photos')">
+      <span class="nav-lock">Photos <span class="nav-lock-dot"></span></span>
+    </button>
+    <button class="nav-btn" id="nav-updates" onclick="tryPrivate('updates')">
+      <span class="nav-lock">Updates <span class="nav-lock-dot"></span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════ HOME ════════════ -->
+<div id="page-home" class="page active">
+
+  <div class="home-hero">
+    <div class="hero-kicker">A new arrival · August 2026</div>
+    <h1 class="hero-headline">Baby Warren<br>is on the way</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">We're expecting our little one this August and couldn't be more grateful to share this journey with the people we love.</p>
+
+    <div class="countdown" id="countdown">
+      <div class="cd-unit"><span class="cd-num" id="cd-days">—</span><span class="cd-label">Days</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">—</span><span class="cd-label">Hours</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-mins">—</span><span class="cd-label">Minutes</span></div>
+    </div>
+    <p class="cd-note">Until our estimated due date</p>
+
+    <div class="btn-row">
+      <button class="btn btn-dark" onclick="goTo('registry')">View Registry</button>
+      <button class="btn btn-ghost" onclick="tryPrivate('updates')">Family Updates</button>
+    </div>
+  </div>
+
+  <div class="about-strip">
+    <div class="about-inner">
+      <div class="about-grid">
+        <div class="about-item">
+          <div class="about-item-label">Due date</div>
+          <div class="about-item-value">August 22, 2026</div>
+        </div>
+        <div class="about-divider"></div>
+        <div class="about-item">
+          <div class="about-item-label">Gender</div>
+          <div class="about-item-value">A girl</div>
+        </div>
+        <div class="about-divider"></div>
+        <div class="about-item">
+          <div class="about-item-label">Registry</div>
+          <div class="about-item-value" style="font-size:1.1rem;cursor:pointer;color:var(--oak);" onclick="goTo('registry')">View wishlist →</div>
+        </div>
+      </div>
+      <div class="about-note">
+        <span class="about-note-head">A note from us</span>
+        We are so looking forward to this next chapter and are grateful for every one of you walking alongside us. If you'd like to help us prepare for our little one, our registry is just a click away. For family and close friends, the photos and updates sections are waiting for you — reach out for the password.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ REGISTRY ════════════ -->
+<div id="page-registry" class="page">
+  <div class="reg-wrap">
+    <div class="page-header">
+      <div class="page-kicker">Baby Warren · Registry</div>
+      <h2 class="page-title">Our <em>Wishlist</em></h2>
+      <p class="page-sub">A carefully curated selection of what we need to welcome our little one. Quality over quantity — everything on this list has been chosen thoughtfully.</p>
+    </div>
+
+    <div class="reg-affiliate-note">
+      <div class="reg-affiliate-bar"></div>
+      <div class="reg-affiliate-text">
+        <strong>A note about our links:</strong> Items link to Amazon. When you purchase through these links, we receive a small referral credit at no extra cost to you. We're genuinely grateful for your generosity — every item means the world to us.
+      </div>
+    </div>
+
+    <!-- Feeding -->
+    <div class="reg-category">
+      <div class="reg-cat-header">
+        <span class="reg-cat-label">Feeding</span>
+        <div class="reg-cat-line"></div>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Stokke Tripp Trapp High Chair — Natural</div>
+          <div class="reg-item-detail">$279</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/Stokke-Tripp-Trapp-Chair-Natural/dp/B0D5KLGSYS?tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+    </div>
+
+    <!-- Sleeping -->
+    <div class="reg-category">
+      <div class="reg-cat-header">
+        <span class="reg-cat-label">Sleeping</span>
+        <div class="reg-cat-line"></div>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">UPPAbaby Bassinet V3 — Savannah</div>
+          <div class="reg-item-detail">$279.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/UPPAbaby-Bassinet-Compatible-Strollers-Overnight/dp/B0DDGZJ1WY?tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Stokke Sleepi 3-in-1 Convertible Crib with Mattress and Extension Kit</div>
+          <div class="reg-item-detail">$1,191.35</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/Stokke-Sleepi-Bed-Extension-Natural/dp/B0B8GGZCQ7?tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+    </div>
+
+    <!-- Diapering -->
+    <div class="reg-category">
+      <div class="reg-cat-header">
+        <span class="reg-cat-label">Diapering</span>
+        <div class="reg-cat-line"></div>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Keekaroo Peanut Wipeable Changing Pad — Grey</div>
+          <div class="reg-item-detail">$149.95</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/Keekaroo-013000EKR-0001-Peanut-Changer-Grey/dp/B017UJ5MYM?tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Coterie Newborn Diaper &amp; Wipes Starter Bundle — 12 Pack Wipes</div>
+          <div class="reg-item-detail">$204 · search Amazon for best current listing</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Coterie+Newborn+Diaper+Wipes+Starter+Bundle&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Earth Mama Organic Diaper Balm — 4 fl oz</div>
+          <div class="reg-item-detail">$21.97</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Earth+Mama+Organic+Diaper+Balm+4+oz&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+    </div>
+
+    <!-- Baby Gear -->
+    <div class="reg-category">
+      <div class="reg-cat-header">
+        <span class="reg-cat-label">Baby Gear</span>
+        <div class="reg-cat-line"></div>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">UPPAbaby Ridge V2 Stroller — Savannah</div>
+          <div class="reg-item-detail">$699.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=UPPAbaby+Ridge+V2+Stroller+Savannah&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">UPPAbaby Aria V2 Infant Car Seat — Jake</div>
+          <div class="reg-item-detail">$449.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=UPPAbaby+Aria+V2+infant+car+seat+Jake&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">MABE The Monarch Baby Buckle Carrier — Ebony</div>
+          <div class="reg-item-detail">$129</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=MABE+Monarch+Baby+Buckle+Carrier+Ebony&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+    </div>
+
+    <!-- Clothing -->
+    <div class="reg-category">
+      <div class="reg-cat-header">
+        <span class="reg-cat-label">Clothing</span>
+        <div class="reg-cat-line"></div>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Small Story Organic Cotton Long Sleeve Printed Bodysuits — 5 Pack</div>
+          <div class="reg-item-detail">$27.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Small+Story+Organic+Cotton+Long+Sleeve+Printed+Bodysuits&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Small Story Short Sleeve Solid Organic Cotton Bodysuits — 5 Pack, Core Neutral</div>
+          <div class="reg-item-detail">$24.99 · two sizes</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Small+Story+Short+Sleeve+Solid+Organic+Bodysuits+Core+Neutral&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Burt's Bees Baby Organic Short Sleeve Bodysuit — 5 Pack, Midnight, 0–3 M</div>
+          <div class="reg-item-detail">$22.46</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Burts+Bees+Baby+Organic+Short+Sleeve+Bodysuit+5+Pack+Midnight&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Burt's Bees Baby Organic Sleep &amp; Play Footie Pajamas — Blue Stripe, Newborn</div>
+          <div class="reg-item-detail">$14.21</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Burts+Bees+Baby+Organic+Sleep+Play+Footie+Pajamas+Blue+Stripe+Newborn&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Small Story Organic Cotton Solid Zipper Footie — 3 Pack, Heather Gray/Oatmeal</div>
+          <div class="reg-item-detail">$38.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Small+Story+Organic+Cotton+Solid+Zipper+Footie+3+Pack&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Hanna Andersson HannaSoft Top Knot Hat — Happy Elephant, Newborn</div>
+          <div class="reg-item-detail">$20</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Hanna+Andersson+HannaSoft+Top+Knot+Hat+Happy+Elephant+Newborn&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Hanna Andersson HannaSoft Top Knot Hat — Foxy, 0–3 M</div>
+          <div class="reg-item-detail">$20</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Hanna+Andersson+HannaSoft+Top+Knot+Hat+Foxy+0-3+months&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Carter's Little Planet Organic French Terry Joggers — 2 Pack, Multi</div>
+          <div class="reg-item-detail">$18</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Carters+Little+Planet+Organic+French+Terry+Joggers+2+Pack&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Small Story 6-Pack Crew Socks — White, 0–3 M</div>
+          <div class="reg-item-detail">$12.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Small+Story+6+Pack+Crew+Socks+White+0-3+months&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Small Story 6-Pack Crew Socks — White, 3–12 M</div>
+          <div class="reg-item-detail">$12.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Small+Story+6+Pack+Crew+Socks+White+3-12+months&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Carter's Chenille Booties — White, 0–3 M, 4 Pack</div>
+          <div class="reg-item-detail">$16</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Carters+Chenille+Booties+White+0-3+months+4+Pack&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Zutano Cozie Fleece Bootie — Heather Grey, 3 M</div>
+          <div class="reg-item-detail">$22</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Zutano+Cozie+Fleece+Bootie+Heather+Grey+3+months&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Aden + Anais Snuggle Knit Newborn Gift Set — Star</div>
+          <div class="reg-item-detail">$69.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Aden+Anais+Snuggle+Knit+Newborn+Gift+Set+Star&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Small Story Organic Cotton Mittens — White, 0–6 M, 4 Pack</div>
+          <div class="reg-item-detail">$12.99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Small+Story+Organic+Cotton+Mittens+White+0-6+months&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Magnetic Me Magnetic Fleece Pram — Sage, 3–6 M</div>
+          <div class="reg-item-detail">$56</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Magnetic+Me+Magnetic+Fleece+Pram+Sage+3-6+months&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+    </div>
+
+    <!-- Playing -->
+    <div class="reg-category">
+      <div class="reg-cat-header">
+        <span class="reg-cat-label">Playing</span>
+        <div class="reg-cat-line"></div>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Poppyseed Play Wooden Baby Gym — Natural</div>
+          <div class="reg-item-detail">$99</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Poppyseed+Play+Wooden+Baby+Gym+Natural&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-item-info">
+          <div class="reg-item-name">Mary Meyer Again Friends Fox Lovey</div>
+          <div class="reg-item-detail">$19</div>
+        </div>
+        <a class="reg-link" href="https://www.amazon.com/s?k=Mary+Meyer+Again+Friends+Fox+Lovey&tag=YOURTAG-20" target="_blank" rel="noopener">View ↗</a>
+      </div>
+    </div>
+
+    <div class="reg-footer">
+      <p>View our complete registry on Amazon</p>
+      <a class="btn btn-dark" href="https://www.amazon.com/baby-reg/?tag=YOURTAG-20" target="_blank" rel="noopener" style="text-decoration:none">View Full Amazon Registry ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PHOTOS LOCK ════════════ -->
+<div id="page-photos-lock" class="page">
+  <div class="lock-screen">
+    <div class="lock-card">
+      <div class="lock-ornament">◯</div>
+      <h2 class="lock-title">Family <em>Photos</em></h2>
+      <p class="lock-sub">This gallery is private, shared with family and close friends. Enter the password we sent you to view.</p>
+      <input type="password" class="pw-field" id="pw-photos" placeholder="Enter password" onkeyup="if(event.key==='Enter') checkPw('photos')">
+      <div class="pw-error" id="pw-photos-err"></div>
+      <button class="btn btn-dark" style="width:100%" onclick="checkPw('photos')">Enter</button>
+      <p class="lock-hint">Shared by email or private message</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PHOTOS (unlocked) ════════════ -->
+<div id="page-photos" class="page">
+  <div class="photos-wrap">
+    <div class="page-header">
+      <div class="page-kicker">Baby Warren · Private</div>
+      <h2 class="page-title">Our <em>Gallery</em></h2>
+      <p class="page-sub">Bump updates, appointments, and moments we're keeping close. Shared with the people we love.</p>
+    </div>
+
+    <div class="photo-grid">
+      <div class="photo-tile">
+        <div class="photo-tile-placeholder">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Announcement</span>
+        </div>
+      </div>
+      <div class="photo-tile">
+        <div class="photo-tile-placeholder">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>8 Weeks</span>
+        </div>
+      </div>
+      <div class="photo-tile">
+        <div class="photo-tile-placeholder">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>12 Weeks</span>
+        </div>
+      </div>
+      <div class="photo-tile">
+        <div class="photo-tile-placeholder">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>20 Weeks</span>
+        </div>
+      </div>
+      <div class="photo-tile">
+        <div class="photo-tile-placeholder">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Add photo</span>
+        </div>
+      </div>
+      <div class="photo-tile">
+        <div class="photo-tile-placeholder">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Add photo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-upload-note">
+      To add real photos: replace the placeholder <code>&lt;div class="photo-tile"&gt;</code> blocks with<br>
+      <code>&lt;div class="photo-tile"&gt;&lt;img src="your-photo.jpg" alt="..."&gt;&lt;/div&gt;</code><br>
+      and upload your images to the same GitHub folder as this file.
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ UPDATES LOCK ════════════ -->
+<div id="page-updates-lock" class="page">
+  <div class="lock-screen">
+    <div class="lock-card">
+      <div class="lock-ornament">◯</div>
+      <h2 class="lock-title">Family <em>Updates</em></h2>
+      <p class="lock-sub">Our journal for family and close friends. Enter the password we sent you to follow along.</p>
+      <input type="password" class="pw-field" id="pw-updates" placeholder="Enter password" onkeyup="if(event.key==='Enter') checkPw('updates')">
+      <div class="pw-error" id="pw-updates-err"></div>
+      <button class="btn btn-dark" style="width:100%" onclick="checkPw('updates')">Enter</button>
+      <p class="lock-hint">Shared by email or private message</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ UPDATES (unlocked) ════════════ -->
+<div id="page-updates" class="page">
+  <div class="updates-wrap">
+    <div class="page-header">
+      <div class="page-kicker">Baby Warren · Private</div>
+      <h2 class="page-title">Our <em>Journal</em></h2>
+      <p class="page-sub">Notes and updates from our journey — written for the people who matter most to us.</p>
+    </div>
+
+    <div class="update-post">
+      <div class="update-meta">
+        <span class="update-date">April 2025</span>
+        <div class="update-meta-line"></div>
+      </div>
+      <h3 class="update-title">Halfway there — <em>20 weeks</em></h3>
+      <div class="update-img">[ Add a bump photo here ]</div>
+      <p class="update-body">Twenty weeks. We can hardly believe it. The anatomy scan last week was one of the most moving experiences of our lives — everything looked exactly as it should, and we sat in the parking lot afterwards just quietly taking it in. The nursery planning has begun in earnest. We're keeping it simple, warm, unhurried. More soon. 💛</p>
+    </div>
+
+    <div class="update-post">
+      <div class="update-meta">
+        <span class="update-date">February 2025</span>
+        <div class="update-meta-line"></div>
+      </div>
+      <h3 class="update-title">Through the <em>first trimester</em></h3>
+      <p class="update-body">We made it through. The first trimester was quieter and harder than we expected — the kind of tired that words don't quite reach. But the 12-week scan was beautiful, and something shifted after that. We've started telling family, and the warmth and love we've received has been overwhelming in the best possible way. Thank you all.</p>
+    </div>
+
+    <div class="update-post">
+      <div class="update-meta">
+        <span class="update-date">January 2025</span>
+        <div class="update-meta-line"></div>
+      </div>
+      <h3 class="update-title">The <em>news</em></h3>
+      <p class="update-body">We found out just before the new year. It felt like the best possible way to close one chapter and open another. Due in August — which feels impossibly far and terrifyingly close all at once. We're nervous, grateful, and already completely in love.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer>
+  <div class="footer-wordmark">Baby Warren · 2026</div>
+  <div class="footer-note">Made with love · warrenbaby.com</div>
+</footer>
+
+<script>
+  // ── PASSWORDS ──
+  const PASSWORDS = {
+    photos:  'V86FH6-gyry-80S6W',
+    updates: 'V86FH6-gyry-80S6W'
+  };
+
+  // ── SESSION STATE ──
+  const unlocked = { photos: false, updates: false };
+
+  // ── NAVIGATION ──
+  function goTo(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const base = page.replace('-lock', '');
+    const navEl = document.getElementById('nav-' + base);
+    if (navEl) navEl.classList.add('active');
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function tryPrivate(section) {
+    if (unlocked[section]) {
+      goTo(section);
+    } else {
+      goTo(section + '-lock');
+      setTimeout(() => {
+        const field = document.getElementById('pw-' + section);
+        if (field) field.focus();
+      }, 100);
+    }
+  }
+
+  // ── PASSWORD CHECK ──
+  function checkPw(section) {
+    const input  = document.getElementById('pw-' + section);
+    const errEl  = document.getElementById('pw-' + section + '-err');
+    const entered = input.value;
+
+    if (entered === PASSWORDS[section]) {
+      unlocked[section] = true;
+      errEl.textContent = '';
+      input.value = '';
+      goTo(section);
+    } else {
+      errEl.textContent = 'Incorrect password — please try again.';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  // ── COUNTDOWN ──
+  function updateCountdown() {
+    // ← Change this date to your actual due date
+    const dueDate = new Date('2026-08-22T00:00:00');
+    const now = new Date();
+    const diff = dueDate - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent  = '0';
+      document.getElementById('cd-hours').textContent = '0';
+      document.getElementById('cd-mins').textContent  = '0';
+      return;
+    }
+
+    const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById('cd-days').textContent  = days;
+    document.getElementById('cd-hours').textContent = hours;
+    document.getElementById('cd-mins').textContent  = mins;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 30000);
+</script>
+</body>
+</html>
